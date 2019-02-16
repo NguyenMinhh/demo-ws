@@ -1,7 +1,12 @@
 package com.example.demo.service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -37,7 +42,7 @@ public class BarcodeScannerService {
 		
 		Waybill waybill = mongoTemplate.findAndModify(
         		new Query(Criteria.where("barcode").is(scanObj.getBarcode())
-        				.and("customerId").is(scanObj.getCustomerId())
+        				//.and("customerId").is(scanObj.getCustomerId())
         				.and("flightId").is(scanObj.getFlightId())),
                 new Update().set("barcode", scanObj.getBarcode())
                 			.set("flightId", scanObj.getFlightId())
@@ -53,5 +58,15 @@ public class BarcodeScannerService {
 		
 		return ret;
 		
+	}
+	
+	public List<Waybill> showAllWaybill(){
+		List<Waybill> lstQuery = mongoTemplate.findAll(Waybill.class);
+		lstQuery.sort(Comparator.comparing(Waybill::getFlightId)
+								.reversed()
+			                    .thenComparing(Comparator.comparing(Waybill::getCustomerId)
+			                    .reversed()));
+		
+		return lstQuery;
 	}
 }

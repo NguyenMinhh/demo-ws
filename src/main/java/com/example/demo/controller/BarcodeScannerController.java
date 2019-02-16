@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.BarcodeScannersDTO;
 import com.example.demo.model.Customer;
+import com.example.demo.model.Waybill;
 import com.example.demo.service.BarcodeScannerService;
 
 
@@ -46,5 +47,13 @@ public class BarcodeScannerController {
 		List<Customer> lstCustomer = barcodeScannerService.getCustomerData();
 		
 		return new ResponseEntity<List<Customer>>(lstCustomer, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/show-all-waybill", method = RequestMethod.GET)
+	public ResponseEntity<?> showAllWaybill() {
+		
+		List<Waybill> lstInfo = barcodeScannerService.showAllWaybill();
+		
+		return new ResponseEntity<List<Waybill>>(lstInfo, HttpStatus.OK);
 	}
 }
