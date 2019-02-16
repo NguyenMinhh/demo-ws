@@ -1,29 +1,10 @@
-package com.example.demo.model;
+package com.example.demo.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "Waybill")
-public class Waybill {
-	@Id
-	private String _id;
+public class BarcodeScannersDTO {
 	
-	@Indexed
 	private String flightId;
-	
-	@Indexed
 	private String customerId;
-	
-	@Indexed
 	private String barcode;
-	
-	public String get_id() {
-		return _id;
-	}
-	public void set_id(String _id) {
-		this._id = _id;
-	}
 	public String getFlightId() {
 		return flightId;
 	}
@@ -42,6 +23,6 @@ public class Waybill {
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
 	}
-
+	
 	
 }
